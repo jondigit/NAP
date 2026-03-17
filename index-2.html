@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NAP — Precision Manufacturing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #0e0e0e;
+    --dark: #1a1a1a;
+    --mid: #5a5a5a;
+    --light: #aaaaaa;
+    --border: #e2e2e2;
+    --bg: #f7f6f3;
+    --white: #ffffff;
+    --accent: #0e0e0e;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 60px;
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+
+  .nav-left { display: flex; align-items: center; gap: 3rem; }
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--black);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-tagline {
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--light);
+    border-left: 1px solid var(--border);
+    padding-left: 2rem;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+  .nav-cta-btn {
+    background: var(--black); color: var(--white) !important;
+    padding: 0.55rem 1.4rem; font-size: 0.7rem !important;
+    letter-spacing: 0.14em !important; transition: opacity 0.2s !important;
+  }
+  .nav-cta-btn:hover { opacity: 0.75 !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  #hero {
+    padding-top: 60px;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+  .hero-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 60px - 120px);
+  }
+  .hero-text {
+    padding: 5rem 3rem 4rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-right: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.26em;
+    text-transform: uppercase; color: var(--light);
+  }
+  .hero-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(4rem, 7.5vw, 8rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    margin: auto 0;
+    padding: 2rem 0;
+  }
+  .hero-title em { font-style: italic; }
+  .hero-title .line-indent { padding-left: 3rem; display: block; }
+
+  .hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+  .hero-sub {
+    font-size: 0.9rem; font-weight: 300; color: var(--mid);
+    line-height: 1.9; max-width: 360px;
+  }
+  .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-shrink: 0; }
+  .btn-primary {
+    background: var(--black); color: var(--white);
+    padding: 0.85rem 2rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.75; }
+  .btn-text {
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--black); text-decoration: none;
+    border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: opacity 0.2s;
+  }
+  .btn-text:hover { opacity: 0.45; }
+
+  .hero-right {
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    padding: 5rem 3rem 4rem;
+    gap: 0;
+  }
+  .hero-right-label {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--light); margin-bottom: 3rem;
+  }
+  .hero-right-quote {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--dark);
+    flex: 1;
+    display: flex; align-items: center;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  .hero-stat {
+    padding: 1.8rem 0;
+    border-right: 1px solid var(--border);
+  }
+  .hero-stat:nth-child(2n) { border-right: none; padding-left: 2rem; }
+  .hero-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .hero-stat-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.4rem; font-weight: 400; color: var(--black); line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 0.65rem; font-weight: 400; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--light); margin-top: 0.3rem;
+  }
+
+  /* Marquee strip */
+  .hero-strip {
+    height: 48px;
+    background: var(--black);
+    display: flex; align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee-track {
+    display: flex; gap: 0;
+    animation: marquee 28s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    padding: 0 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    display: flex; align-items: center; height: 48px;
+  }
+  .marquee-item.highlight { color: rgba(255,255,255,0.9); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── SECTION COMMON ── */
+  .section-header {
+    padding: 6rem 3rem 3rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: end;
+  }
+  .section-label {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--light); margin-bottom: 1.2rem;
+  }
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 400; line-height: 1.05; color: var(--black);
+  }
+  .section-title em { font-style: italic; }
+  .section-body {
+    font-size: 0.88rem; font-weight: 300; color: var(--mid); line-height: 1.9;
+    align-self: end;
+  }
+
+  /* ── PRODUCTS ── */
+  #products { border-top: 1px solid var(--border); }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .product-card {
+    padding: 3rem 2.5rem 3.5rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+  .product-card:nth-child(3n) { border-right: none; }
+  .product-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--black);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .product-card:hover { background: var(--bg); }
+  .product-card:hover::after { transform: scaleX(1); }
+
+  .product-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3.5rem; font-weight: 400; font-style: italic;
+    color: var(--border); line-height: 1;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+  }
+  .product-card:hover .product-num { color: #d5d5d5; }
+  .product-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.35rem; font-weight: 400; color: var(--black);
+    margin-bottom: 0.9rem; line-height: 1.25;
+  }
+  .product-desc {
+    font-size: 0.84rem; font-weight: 300; color: var(--mid);
+    line-height: 1.85; margin-bottom: 2.5rem;
+  }
+  .product-link {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--black); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .product-link-arrow { transition: transform 0.2s; }
+  .product-card:hover .product-link-arrow { transform: translateX(5px); }
+
+  /* ── ABOUT ── */
+  #about { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+  .about-left {
+    padding: 6rem 3rem;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .about-big {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 400; line-height: 1.2; color: var(--black);
+    margin: 2rem 0;
+  }
+  .about-big em { font-style: italic; }
+  .about-body {
+    font-size: 0.88rem; font-weight: 300; color: var(--mid); line-height: 1.9;
+    max-width: 480px;
+  }
+  .about-pillars {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+    margin-top: 3.5rem;
+  }
+  .pillar {
+    padding: 1.8rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .pillar:nth-child(odd) { border-right: 1px solid var(--border); padding-right: 2rem; }
+  .pillar:nth-child(even) { padding-left: 2rem; }
+  .pillar-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.8rem; font-style: italic; color: var(--light);
+    margin-bottom: 0.5rem; line-height: 1;
+  }
+  .pillar-title {
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--black); margin-bottom: 0.35rem;
+  }
+  .pillar-text { font-size: 0.8rem; font-weight: 300; color: var(--light); line-height: 1.6; }
+
+  .about-right {
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    padding: 6rem 3rem;
+    gap: 3rem;
+  }
+  .cert-block {
+    border: 1px solid var(--border); background: var(--white);
+    padding: 2.5rem; text-align: center;
+  }
+  .cert-label { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--light); margin-bottom: 0.7rem; }
+  .cert-val { font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-style: italic; color: var(--black); }
+  .about-pull {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    font-style: italic; line-height: 1.55; color: var(--dark);
+    flex: 1; display: flex; align-items: center;
+    border-left: 2px solid var(--border); padding-left: 2rem;
+  }
+  .about-location {
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .about-location-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 0.4rem; }
+  .about-location-val { font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--black); }
+
+  /* ── INDUSTRIES ── */
+  #industries { border-top: 1px solid var(--border); }
+  .industries-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); }
+  .industry-card {
+    padding: 3.5rem 2.5rem;
+    border-right: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: background 0.3s; cursor: pointer;
+  }
+  .industry-card:last-child { border-right: none; }
+  .industry-card:hover { background: var(--bg); }
+  .industry-bg-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 7rem; font-style: italic; font-weight: 400;
+    color: var(--border); line-height: 1;
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    transition: color 0.3s; pointer-events: none;
+  }
+  .industry-card:hover .industry-bg-num { color: #d8d8d8; }
+  .industry-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem; font-weight: 400;
+    color: var(--black); line-height: 1.3;
+    margin-bottom: 1.2rem; position: relative; z-index: 1;
+    margin-top: 5rem;
+  }
+  .industry-desc {
+    font-size: 0.82rem; font-weight: 300; color: var(--mid);
+    line-height: 1.8; position: relative; z-index: 1;
+  }
+
+  /* ── CONTACT ── */
+  #contact { display: grid; grid-template-columns: 1fr 1.6fr; border-top: 1px solid var(--border); }
+  .contact-left {
+    padding: 6rem 3rem;
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .contact-big {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 400; line-height: 1.1; color: var(--black);
+    margin: 2rem 0 3rem;
+  }
+  .contact-big em { font-style: italic; }
+  .contact-detail { padding: 1.8rem 0; border-bottom: 1px solid var(--border); }
+  .contact-detail-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 0.5rem; }
+  .contact-detail-val { font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--black); line-height: 1.6; }
+
+  .contact-right { padding: 6rem 3rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 0; }
+  .form-group { display: flex; flex-direction: column; margin-bottom: 2.2rem; }
+  .form-group label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 0.7rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    background: transparent; border: none; border-bottom: 1px solid var(--border);
+    color: var(--black); padding: 0.7rem 0;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 300;
+    outline: none; transition: border-color 0.2s; resize: none; width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--black); }
+  .form-group select {
+    appearance: none; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23aaa' fill='none' stroke-width='1.2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0 center;
+  }
+  .form-group select option { background: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black); color: var(--white);
+    padding: 3rem;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    align-items: center; gap: 2rem;
+  }
+  .footer-logo { font-family: 'Instrument Serif', serif; font-size: 1.4rem; font-style: italic; color: var(--white); text-decoration: none; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; justify-content: center; }
+  .footer-links a { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; text-align: right; }
+
+  /* ── FADE IN ── */
+  .fade { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade.visible { opacity: 1; transform: none; }
+  .fade-delay-1 { transition-delay: 0.1s; }
+  .fade-delay-2 { transition-delay: 0.2s; }
+  .fade-delay-3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .hero-main { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-text { border-right: none; }
+    .section-header { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-card:nth-child(3n) { border-right: 1px solid var(--border); }
+    .product-card:nth-child(2n) { border-right: none; }
+    #about { grid-template-columns: 1fr; }
+    .about-left { border-right: none; border-bottom: 1px solid var(--border); }
+    .industries-grid { grid-template-columns: repeat(2, 1fr); }
+    .industry-card:nth-child(2n) { border-right: none; }
+    .industry-card:nth-child(n+3) { border-top: 1px solid var(--border); }
+    #contact { grid-template-columns: 1fr; }
+    .contact-left { border-right: none; border-bottom: 1px solid var(--border); }
+    footer { grid-template-columns: 1fr 1fr; }
+    .footer-copy { text-align: left; }
+  }
+  @media (max-width: 680px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .nav-tagline { display: none; }
+    .hero-text { padding: 4rem 1.5rem 3rem; }
+    .section-header, .about-left, .about-right, .contact-left, .contact-right { padding: 4rem 1.5rem; }
+    .products-grid { grid-template-columns: 1fr; }
+    .product-card { border-right: none; }
+    .industries-grid { grid-template-columns: 1fr; }
+    .industry-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    footer { grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 1.5rem; }
+    .footer-links { flex-wrap: wrap; gap: 1.2rem; }
+    .footer-copy { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-left">
+    <a href="#hero" class="nav-logo">NAP</a>
+    <span class="nav-tagline">Precision Manufacturing</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#contact" class="nav-cta-btn">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-main">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Precision Manufacturing — Est. 1984</div>
+      <h1 class="hero-title">
+        Built to<br/>
+        <em>per</em>form.<br/>
+        <span class="line-indent">De<em>signed</em></span><br/>
+        <span class="line-indent">to last.</span>
+      </h1>
+      <div class="hero-bottom">
+        <p class="hero-sub">NAP delivers manufacturing solutions engineered for the demands of modern industry — combining precision, durability, and innovation at every level of production.</p>
+        <div class="hero-actions">
+          <a href="#products" class="btn-primary">Explore Products</a>
+          <a href="#contact" class="btn-text">Get a Quote</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-label">Our Philosophy</div>
+      <p class="hero-right-quote">"We are problem solvers — evolving and searching for a better way to deliver resolved, precise solutions. Good manufacturing that matters makes industries stronger."</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">40+</div><div class="hero-stat-label">Years Experience</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">200+</div><div class="hero-stat-label">Global Clients</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">99%</div><div class="hero-stat-label">On-Time Delivery</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">ISO</div><div class="hero-stat-label">9001:2015 Certified</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marquee strip -->
+  <div class="hero-strip">
+    <div class="marquee-track">
+      <span class="marquee-item highlight">Precision Components</span>
+      <span class="marquee-item">Structural Assemblies</span>
+      <span class="marquee-item highlight">Custom Fabrication</span>
+      <span class="marquee-item">Tooling & Fixtures</span>
+      <span class="marquee-item highlight">Sheet Metal Works</span>
+      <span class="marquee-item">Surface Finishing</span>
+      <span class="marquee-item highlight">ISO 9001:2015 Certified</span>
+      <span class="marquee-item">San Marcos, TX</span>
+      <span class="marquee-item highlight">Est. 1984</span>
+      <span class="marquee-item">99% On-Time Delivery</span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item highlight">Precision Components</span>
+      <span class="marquee-item">Structural Assemblies</span>
+      <span class="marquee-item highlight">Custom Fabrication</span>
+      <span class="marquee-item">Tooling & Fixtures</span>
+      <span class="marquee-item highlight">Sheet Metal Works</span>
+      <span class="marquee-item">Surface Finishing</span>
+      <span class="marquee-item highlight">ISO 9001:2015 Certified</span>
+      <span class="marquee-item">San Marcos, TX</span>
+      <span class="marquee-item highlight">Est. 1984</span>
+      <span class="marquee-item">99% On-Time Delivery</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-header fade">
+    <div>
+      <div class="section-label">What We Make</div>
+      <h2 class="section-title">Products &amp;<br/><em>Capabilities</em></h2>
+    </div>
+    <p class="section-body">From precision-machined components to large-scale assemblies, NAP's capabilities span the full spectrum of industrial demand.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card fade"><div class="product-num">01</div><div class="product-name">Precision Components</div><p class="product-desc">CNC-machined parts manufactured to exacting tolerances for critical applications across aerospace, defense, and heavy industry.</p><a href="#contact" class="product-link">Inquire <span class="product-link-arrow">→</span></a></div>
+    <div class="product-card fade fade-delay-1"><div class="product-num">02</div><div class="product-name">Structural Assemblies</div><p class="product-desc">Engineered structural systems and sub-assemblies built for load-bearing performance in the harshest operating environments.</p><a href="#contact" class="product-link">Inquire <span class="product-link-arrow">→</span></a></div>
+    <div class="product-card fade fade-delay-2"><div class="product-num">03</div><div class="product-name">Custom Fabrication</div><p class="product-desc">End-to-end fabrication services from design consultation and prototyping through to full-scale production runs.</p><a href="#contact" class="product-link">Inquire <span class="product-link-arrow">→</span></a></div>
+    <div class="product-card fade"><div class="product-num">04</div><div class="product-name">Tooling &amp; Fixtures</div><p class="product-desc">Precision tooling, jigs, and production fixtures designed to maximize throughput and consistency on your production line.</p><a href="#contact" class="product-link">Inquire <span class="product-link-arrow">→</span></a></div>
+    <div class="product-card fade fade-delay-1"><div class="product-num">05</div><div class="product-name">Sheet Metal Works</div><p class="product-desc">High-precision sheet metal forming, stamping, and laser cutting for complex geometries and high-volume production.</p><a href="#contact" class="product-link">Inquire <span class="product-link-arrow">→</span></a></div>
+    <div class="product-card fade fade-delay-2"><div class="product-num">06</div><div class="product-name">Surface Finishing</div><p class="product-desc">Complete surface treatment services including anodizing, plating, coating, and industrial painting to specification.</p><a href="#contact" class="product-link">Inquire <span class="product-link-arrow">→</span></a></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left fade">
+    <div>
+      <div class="section-label">Who We Are</div>
+      <h2 class="about-big">Engineering <em>excellence</em><br/>since day one.</h2>
+      <p class="about-body">NAP was founded on the principle that manufacturing done right demands an uncompromising commitment to quality, precision, and reliability. We are a trusted partner to industry leaders worldwide, delivering components and assemblies that meet the most demanding specifications.</p>
+      <p class="about-body" style="margin-top:1rem;">Our facilities combine the latest in CNC technology with rigorous quality management systems to ensure every part that leaves our floor is built to perform.</p>
+    </div>
+    <div class="about-pillars">
+      <div class="pillar"><div class="pillar-num">01</div><div class="pillar-title">Precision</div><div class="pillar-text">Tolerances measured in microns.</div></div>
+      <div class="pillar"><div class="pillar-num">02</div><div class="pillar-title">Reliability</div><div class="pillar-text">99%+ on-time delivery rate.</div></div>
+      <div class="pillar"><div class="pillar-num">03</div><div class="pillar-title">Scale</div><div class="pillar-text">Prototype to full production.</div></div>
+      <div class="pillar"><div class="pillar-num">04</div><div class="pillar-title">Quality</div><div class="pillar-text">ISO 9001:2015 certified.</div></div>
+    </div>
+  </div>
+  <div class="about-right fade fade-delay-1">
+    <div class="cert-block">
+      <div class="cert-label">Quality Certified</div>
+      <div class="cert-val">ISO 9001:2015</div>
+    </div>
+    <p class="about-pull">"We don't just manufacture parts — we build the confidence that comes with knowing something was made exactly right."</p>
+    <div class="about-location">
+      <div class="about-location-label">Headquarters</div>
+      <div class="about-location-val">San Marcos, Texas</div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="section-header fade">
+    <div>
+      <div class="section-label">Markets We Serve</div>
+      <h2 class="section-title">Industries<br/>We <em>Power</em></h2>
+    </div>
+    <p class="section-body">NAP components are trusted in mission-critical applications across the world's most demanding sectors.</p>
+  </div>
+  <div class="industries-grid">
+    <div class="industry-card fade">
+      <div class="industry-bg-num">01</div>
+      <div class="industry-name">Aerospace &amp; Defense</div>
+      <p class="industry-desc">Flight-critical components engineered to meet the strictest aerospace standards and certifications.</p>
+    </div>
+    <div class="industry-card fade fade-delay-1">
+      <div class="industry-bg-num">02</div>
+      <div class="industry-name">Energy &amp; Oil/Gas</div>
+      <p class="industry-desc">Rugged components built for the extreme pressures of upstream and midstream energy operations.</p>
+    </div>
+    <div class="industry-card fade fade-delay-2">
+      <div class="industry-bg-num">03</div>
+      <div class="industry-name">Medical Devices</div>
+      <p class="industry-desc">Cleanroom-capable precision manufacturing for implantable and diagnostic equipment.</p>
+    </div>
+    <div class="industry-card fade fade-delay-3">
+      <div class="industry-bg-num">04</div>
+      <div class="industry-name">Automotive</div>
+      <p class="industry-desc">High-volume precision parts for powertrain, chassis, and EV drivetrain systems.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left fade">
+    <div>
+      <div class="section-label">Get In Touch</div>
+      <h2 class="contact-big">Let's build<br/><em>something</em><br/>together.</h2>
+    </div>
+    <div>
+      <div class="contact-detail"><div class="contact-detail-label">Headquarters</div><div class="contact-detail-val">1200 Industrial Parkway<br/>San Marcos, TX 78666</div></div>
+      <div class="contact-detail"><div class="contact-detail-label">Phone</div><div class="contact-detail-val">+1 (512) 555-0100</div></div>
+      <div class="contact-detail"><div class="contact-detail-label">Email</div><div class="contact-detail-val">info@nap-mfg.com</div></div>
+    </div>
+  </div>
+  <div class="contact-right fade fade-delay-1">
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="John"/></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"/></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Company</label><input type="text" placeholder="Your Company"/></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 (___) ___-____"/></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="john@company.com"/></div>
+    <div class="form-group">
+      <label>Area of Interest</label>
+      <select>
+        <option value="" disabled selected>Select a product or service</option>
+        <option>Precision Components</option>
+        <option>Structural Assemblies</option>
+        <option>Custom Fabrication</option>
+        <option>Tooling &amp; Fixtures</option>
+        <option>Sheet Metal Works</option>
+        <option>Surface Finishing</option>
+        <option>General Inquiry</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Tell us about your project, specifications, or timeline…"></textarea></div>
+    <button class="btn-primary" style="width:100%;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;">Send Message</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="footer-logo">NAP</a>
+  <ul class="footer-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 NAP Manufacturing. All rights reserved.</div>
+</footer>
+
+<script>
+  // Nav shadow on scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
