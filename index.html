@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NAP — Precision Manufacturing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #111111;
+    --dark: #1c1c1c;
+    --mid: #555555;
+    --light: #999999;
+    --border: #e0e0e0;
+    --bg: #f9f9f7;
+    --white: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 64px; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Libre Baskerville', serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.18em; color: var(--black); text-decoration: none; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.13em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--black); }
+  .nav-links .nav-cta { color: var(--black); border-bottom: 1.5px solid var(--black); padding-bottom: 1px; }
+
+  /* HERO */
+  #hero { padding-top: 64px; min-height: 92vh; display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-left { display: flex; flex-direction: column; justify-content: flex-end; padding: 6rem 3rem 5rem; border-right: 1px solid var(--border); }
+  .hero-eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--light); margin-bottom: 2rem; }
+  .hero-title { font-family: 'Libre Baskerville', serif; font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 400; line-height: 1.1; margin-bottom: 2.5rem; color: var(--black); }
+  .hero-title em { font-style: italic; color: var(--mid); }
+  .hero-sub { font-size: 0.92rem; font-weight: 300; color: var(--mid); line-height: 1.9; max-width: 440px; margin-bottom: 3rem; }
+  .hero-actions { display: flex; gap: 1.5rem; align-items: center; }
+  .btn-primary { background: var(--black); color: var(--white); padding: 0.85rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: opacity 0.2s; display: inline-block; }
+  .btn-primary:hover { opacity: 0.75; }
+  .btn-text { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 1px; transition: opacity 0.2s; }
+  .btn-text:hover { opacity: 0.5; }
+  .hero-right { background: var(--bg); display: flex; flex-direction: column; justify-content: flex-end; padding: 5rem 3rem; gap: 3rem; }
+  .hero-quote { font-family: 'Libre Baskerville', serif; font-size: 1.05rem; font-style: italic; color: var(--mid); line-height: 1.75; }
+  .hero-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; border-top: 1px solid var(--border); padding-top: 2.5rem; }
+  .stat-num { font-family: 'Libre Baskerville', serif; font-size: 2.6rem; font-weight: 400; color: var(--black); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-label { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); }
+
+  /* SECTION HEADER */
+  .section-header { padding: 5rem 3rem 3rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end; gap: 3rem; }
+  .section-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--light); margin-bottom: 1rem; }
+  .section-title { font-family: 'Libre Baskerville', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; line-height: 1.15; color: var(--black); }
+  .section-title em { font-style: italic; color: var(--mid); }
+  .section-body { font-size: 0.88rem; font-weight: 300; color: var(--mid); line-height: 1.9; max-width: 400px; }
+
+  /* PRODUCTS */
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .product-card { padding: 3rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.25s; cursor: pointer; }
+  .product-card:nth-child(3n) { border-right: none; }
+  .product-card:hover { background: var(--bg); }
+  .product-num { font-family: 'Libre Baskerville', serif; font-size: 0.7rem; font-style: italic; color: var(--light); margin-bottom: 2rem; }
+  .product-name { font-family: 'Libre Baskerville', serif; font-size: 1.15rem; font-weight: 400; margin-bottom: 1rem; color: var(--black); line-height: 1.3; }
+  .product-desc { font-size: 0.86rem; font-weight: 300; color: var(--mid); line-height: 1.8; margin-bottom: 2rem; }
+  .product-link { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: border-color 0.2s; }
+  .product-card:hover .product-link { border-color: var(--black); }
+
+  /* ABOUT */
+  #about { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+  .about-text { padding: 6rem 3rem; border-right: 1px solid var(--border); }
+  .about-visual { padding: 6rem 3rem; background: var(--bg); display: flex; flex-direction: column; justify-content: space-between; gap: 3rem; }
+  .about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 3rem; }
+  .pillar { padding: 1.5rem 0; border-top: 1px solid var(--border); }
+  .pillar:nth-child(odd) { border-right: 1px solid var(--border); padding-right: 2rem; }
+  .pillar:nth-child(even) { padding-left: 2rem; }
+  .pillar-title { font-family: 'Libre Baskerville', serif; font-size: 0.92rem; font-weight: 400; color: var(--black); margin-bottom: 0.4rem; }
+  .pillar-text { font-size: 0.8rem; font-weight: 300; color: var(--light); line-height: 1.7; }
+  .about-cert { border: 1px solid var(--border); padding: 2.5rem; text-align: center; background: var(--white); }
+  .cert-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 0.8rem; }
+  .cert-value { font-family: 'Libre Baskerville', serif; font-size: 1.4rem; font-weight: 400; color: var(--black); }
+  .about-quote { font-family: 'Libre Baskerville', serif; font-size: 1.2rem; font-style: italic; font-weight: 400; color: var(--dark); line-height: 1.65; }
+  .about-hq-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 0.5rem; }
+  .about-hq-val { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; color: var(--black); }
+
+  /* INDUSTRIES */
+  #industries { border-top: 1px solid var(--border); }
+  .industries-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); }
+  .industry-card { padding: 3rem 2.5rem; border-right: 1px solid var(--border); transition: background 0.25s; cursor: pointer; }
+  .industry-card:last-child { border-right: none; }
+  .industry-card:hover { background: var(--bg); }
+  .industry-num { font-family: 'Libre Baskerville', serif; font-size: 0.7rem; font-style: italic; color: var(--light); margin-bottom: 2rem; }
+  .industry-name { font-family: 'Libre Baskerville', serif; font-size: 1.05rem; font-weight: 400; margin-bottom: 1rem; color: var(--black); line-height: 1.35; }
+  .industry-desc { font-size: 0.83rem; font-weight: 300; color: var(--light); line-height: 1.75; }
+
+  /* CONTACT */
+  #contact { display: grid; grid-template-columns: 1fr 1.5fr; border-top: 1px solid var(--border); }
+  .contact-info { padding: 6rem 3rem; border-right: 1px solid var(--border); background: var(--bg); }
+  .contact-detail { margin-top: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+  .contact-detail-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 0.5rem; }
+  .contact-detail-value { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; font-weight: 400; color: var(--black); line-height: 1.7; }
+  .contact-form { padding: 6rem 3rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 0; }
+  .form-group { display: flex; flex-direction: column; margin-bottom: 2rem; }
+  .form-group label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 0.6rem; }
+  .form-group input, .form-group select, .form-group textarea { background: transparent; border: none; border-bottom: 1px solid var(--border); color: var(--black); padding: 0.75rem 0; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 300; outline: none; transition: border-color 0.2s; resize: none; width: 100%; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--black); }
+  .form-group select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23999' fill='none' stroke-width='1.2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0 center; }
+  .form-group select option { background: var(--white); }
+
+  /* FOOTER */
+  footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: 'Libre Baskerville', serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.18em; color: var(--black); text-decoration: none; text-transform: uppercase; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--black); }
+  .footer-copy { font-size: 0.7rem; color: var(--light); letter-spacing: 0.06em; }
+
+  /* SCROLL FADE */
+  .fade { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade.visible { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 0 2rem; }
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 5rem 2rem 4rem; }
+    .section-header { padding: 4rem 2rem 2.5rem; flex-direction: column; align-items: flex-start; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-card:nth-child(3n) { border-right: 1px solid var(--border); }
+    .product-card:nth-child(2n) { border-right: none; }
+    #about { grid-template-columns: 1fr; }
+    .about-text { border-right: none; border-bottom: 1px solid var(--border); padding: 4rem 2rem; }
+    .about-visual { padding: 4rem 2rem; }
+    .industries-grid { grid-template-columns: repeat(2, 1fr); }
+    .industry-card:nth-child(2n) { border-right: none; }
+    .industry-card:nth-child(n+3) { border-top: 1px solid var(--border); }
+    #contact { grid-template-columns: 1fr; }
+    .contact-info { border-right: none; border-bottom: 1px solid var(--border); padding: 4rem 2rem; }
+    .contact-form { padding: 4rem 2rem; }
+    footer { padding: 2rem; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero-left { padding: 3.5rem 1.5rem 3rem; }
+    .products-grid { grid-template-columns: 1fr; }
+    .product-card { border-right: none; }
+    .industries-grid { grid-template-columns: 1fr; }
+    .industry-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    footer { padding: 2rem 1.5rem; }
+    .footer-links { flex-wrap: wrap; gap: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">NAP</a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Precision Manufacturing — Est. 1984</div>
+    <h1 class="hero-title">Built to perform.<br/><em>Designed to last.</em></h1>
+    <p class="hero-sub">NAP delivers manufacturing solutions engineered for the demands of modern industry — combining precision, durability, and innovation at every level of production.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Explore Products</a>
+      <a href="#contact" class="btn-text">Request a Quote</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div style="flex:1"></div>
+    <p class="hero-quote">"We are problem solvers — evolving and searching for a better way to deliver resolved, precise solutions. Good manufacturing that matters makes industries stronger."</p>
+    <div class="hero-stats-grid">
+      <div><div class="stat-num">40+</div><div class="stat-label">Years Experience</div></div>
+      <div><div class="stat-num">200+</div><div class="stat-label">Global Clients</div></div>
+      <div><div class="stat-num">99%</div><div class="stat-label">On-Time Delivery</div></div>
+      <div><div class="stat-num">ISO</div><div class="stat-label">9001:2015 Certified</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="products">
+  <div class="section-header fade">
+    <div>
+      <div class="section-label">What We Make</div>
+      <h2 class="section-title">Products &amp; <em>Capabilities</em></h2>
+    </div>
+    <p class="section-body">From precision-machined components to large-scale assemblies, NAP's capabilities span the full spectrum of industrial demand.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card fade"><div class="product-num">01</div><div class="product-name">Precision Components</div><p class="product-desc">CNC-machined parts manufactured to exacting tolerances for critical applications across aerospace, defense, and heavy industry.</p><a href="#contact" class="product-link">Inquire</a></div>
+    <div class="product-card fade"><div class="product-num">02</div><div class="product-name">Structural Assemblies</div><p class="product-desc">Engineered structural systems and sub-assemblies built for load-bearing performance in the harshest operating environments.</p><a href="#contact" class="product-link">Inquire</a></div>
+    <div class="product-card fade"><div class="product-num">03</div><div class="product-name">Custom Fabrication</div><p class="product-desc">End-to-end fabrication services from design consultation and prototyping through to full-scale production runs.</p><a href="#contact" class="product-link">Inquire</a></div>
+    <div class="product-card fade"><div class="product-num">04</div><div class="product-name">Tooling &amp; Fixtures</div><p class="product-desc">Precision tooling, jigs, and production fixtures designed to maximize throughput and consistency on your production line.</p><a href="#contact" class="product-link">Inquire</a></div>
+    <div class="product-card fade"><div class="product-num">05</div><div class="product-name">Sheet Metal Works</div><p class="product-desc">High-precision sheet metal forming, stamping, and laser cutting for complex geometries and high-volume production.</p><a href="#contact" class="product-link">Inquire</a></div>
+    <div class="product-card fade"><div class="product-num">06</div><div class="product-name">Surface Finishing</div><p class="product-desc">Complete surface treatment services including anodizing, plating, coating, and industrial painting to specification.</p><a href="#contact" class="product-link">Inquire</a></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-text fade">
+    <div class="section-label">Who We Are</div>
+    <h2 class="section-title" style="margin-bottom:2rem;">Engineering <em>excellence</em><br/>since day one.</h2>
+    <p class="section-body">NAP was founded on the principle that manufacturing done right demands an uncompromising commitment to quality, precision, and reliability. We are a trusted partner to industry leaders worldwide, delivering components and assemblies that meet the most demanding specifications.</p>
+    <p class="section-body" style="margin-top:1.2rem;">Our facilities combine the latest in CNC technology with rigorous quality management systems to ensure every part that leaves our floor is built to perform.</p>
+    <div class="about-pillars">
+      <div class="pillar"><div class="pillar-title">Precision</div><div class="pillar-text">Tolerances measured in microns.</div></div>
+      <div class="pillar"><div class="pillar-title">Reliability</div><div class="pillar-text">99%+ on-time delivery rate.</div></div>
+      <div class="pillar"><div class="pillar-title">Scale</div><div class="pillar-text">Prototype to full production.</div></div>
+      <div class="pillar"><div class="pillar-title">Quality</div><div class="pillar-text">ISO 9001:2015 certified.</div></div>
+    </div>
+  </div>
+  <div class="about-visual fade">
+    <div class="about-cert">
+      <div class="cert-label">Quality Certified</div>
+      <div class="cert-value">ISO 9001:2015</div>
+    </div>
+    <p class="about-quote">"We don't just manufacture parts — we build the confidence that comes with knowing something was made exactly right."</p>
+    <div style="padding-top:2rem;border-top:1px solid var(--border);">
+      <div class="about-hq-label">Headquarters</div>
+      <div class="about-hq-val">San Marcos, Texas</div>
+    </div>
+  </div>
+</section>
+
+<section id="industries">
+  <div class="section-header fade">
+    <div>
+      <div class="section-label">Markets We Serve</div>
+      <h2 class="section-title">Industries We <em>Power</em></h2>
+    </div>
+    <p class="section-body">NAP components are trusted in mission-critical applications across the world's most demanding sectors.</p>
+  </div>
+  <div class="industries-grid">
+    <div class="industry-card fade"><div class="industry-num">01</div><div class="industry-name">Aerospace &amp; Defense</div><p class="industry-desc">Flight-critical components engineered to meet the strictest aerospace standards and certifications.</p></div>
+    <div class="industry-card fade"><div class="industry-num">02</div><div class="industry-name">Energy &amp; Oil/Gas</div><p class="industry-desc">Rugged components built for the extreme pressures of upstream and midstream energy operations.</p></div>
+    <div class="industry-card fade"><div class="industry-num">03</div><div class="industry-name">Medical Devices</div><p class="industry-desc">Cleanroom-capable precision manufacturing for implantable and diagnostic equipment.</p></div>
+    <div class="industry-card fade"><div class="industry-num">04</div><div class="industry-name">Automotive</div><p class="industry-desc">High-volume precision parts for powertrain, chassis, and EV drivetrain systems.</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-info fade">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title" style="margin-bottom:0;">Let's build<br/><em>something</em><br/>together.</h2>
+    <div class="contact-detail"><div class="contact-detail-label">Headquarters</div><div class="contact-detail-value">1200 Industrial Parkway<br/>San Marcos, TX 78666</div></div>
+    <div class="contact-detail"><div class="contact-detail-label">Phone</div><div class="contact-detail-value">+1 (512) 555-0100</div></div>
+    <div class="contact-detail"><div class="contact-detail-label">Email</div><div class="contact-detail-value">info@nap-mfg.com</div></div>
+  </div>
+  <div class="contact-form fade">
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="John"/></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"/></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Company</label><input type="text" placeholder="Your Company"/></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 (___) ___-____"/></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="john@company.com"/></div>
+    <div class="form-group">
+      <label>Area of Interest</label>
+      <select>
+        <option value="" disabled selected>Select a product or service</option>
+        <option>Precision Components</option>
+        <option>Structural Assemblies</option>
+        <option>Custom Fabrication</option>
+        <option>Tooling &amp; Fixtures</option>
+        <option>Sheet Metal Works</option>
+        <option>Surface Finishing</option>
+        <option>General Inquiry</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Tell us about your project, specifications, or timeline…"></textarea></div>
+    <button class="btn-primary" style="width:100%;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;">Send Message</button>
+  </div>
+</section>
+
+<footer>
+  <a href="#hero" class="footer-logo">NAP</a>
+  <ul class="footer-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 NAP Manufacturing. All rights reserved.</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
